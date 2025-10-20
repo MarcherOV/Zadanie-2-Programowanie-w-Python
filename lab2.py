@@ -1,9 +1,12 @@
 import math
+import matplotlib.pyplot as plt
 
 def convert_to_int(string):
+    """Konwertuje ciąg znaków na listę liczb całkowitych."""
     return [int(x) for x in string.split()]
 
 def analyze_numbers(numbers):
+    """Analizuje liczby i zwraca słownik z wynikami."""
     n = len(numbers)
     suma = sum(numbers)
     srednia = suma / n
@@ -25,10 +28,40 @@ def analyze_numbers(numbers):
     }
 
 def save_results(results):
+    """Zapisuje wyniki analizy do pliku tekstowego."""
     with open("wyniki.txt", "w", encoding="utf-8") as f:
         for key, value in results.items():
             f.write(f"{key}: {value}\n")
-    print("\n Wyniki zapisano do pliku 'wyniki.txt'.")
+    print("\n✅ Wyniki zapisano do pliku 'wyniki.txt'.")
+
+def show_graphs(numbers, results):
+    """Wyświetla wykresy graficzne analizy danych."""
+    plt.figure(figsize=(12, 8))
+
+    # 1️⃣ Histogram wartości
+    plt.subplot(3, 1, 1)
+    plt.hist(numbers, bins=10, edgecolor='black')
+    plt.title("Histogram wartości")
+    plt.xlabel("Wartości liczb")
+    plt.ylabel("Częstotliwość")
+
+    # 2️⃣ Wykres słupkowy dodatnich, ujemnych i zer
+    plt.subplot(3, 1, 2)
+    kategorie = ['Dodatnie', 'Ujemne', 'Zera']
+    wartosci = [results['dodatnie'], results['ujemne'], results['zera']]
+    plt.bar(kategorie, wartosci, color=['green', 'red', 'gray'])
+    plt.title("Rozkład znaków liczb")
+    plt.ylabel("Liczba wystąpień")
+
+    # 3️⃣ Wykres liniowy kolejności wprowadzonych liczb
+    plt.subplot(3, 1, 3)
+    plt.plot(range(1, len(numbers)+1), numbers, marker='o', linestyle='-', color='blue')
+    plt.title("Kolejność wprowadzonych liczb")
+    plt.xlabel("Indeks liczby")
+    plt.ylabel("Wartość")
+
+    plt.tight_layout()
+    plt.show()
 
 def main():
     while True:
@@ -54,6 +87,7 @@ def main():
                 print(f"Liczby w odwrotnej kolejności: {results['odwrotnie']}")
                 
                 save_results(results)
+                show_graphs(numbers, results)
             except ValueError:
                 print("Błąd: wprowadzono niepoprawne dane (nie są liczbami całkowitymi).")
 
