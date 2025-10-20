@@ -1,0 +1,11 @@
+liczba_wartosci: 5
+suma: 15
+srednia: 3.0
+dodatnie: 5
+ujemne: 0
+zera: 0
+maks: 5
+min: 1
+wariancja: 2.0
+odchylenie_std: 1.4142135623730951
+odwrotnie: [5, 4, 3, 2, 1]
